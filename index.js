@@ -10,6 +10,10 @@ const getRandomNumberInRange = require('./utils/getRandomNumberInRange');
 function generateRandomObject(schema) {
   const resultObj = {};
 
+  if (!schema.properties) {
+    throw new Error('Schema for object properties must be provided.');
+  }
+
   for (const property in schema.properties) {
     if (!schema.required?.includes(property) && Math.random() < 0.5) {
       resultObj[property] = generateRandomData(schema.properties[property]);
@@ -104,6 +108,6 @@ function generateRandomArray(schemaPart) {
   return result;
 }
 
-module.exports = generateRandomObject;
+module.exports = generateRandomData;
 
-console.log(generateRandomObject(schema));
+//console.log(generateRandomObject(schema));
