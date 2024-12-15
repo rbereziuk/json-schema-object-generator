@@ -9,6 +9,11 @@ const schema = {
       description: 'Name of the product',
       type: 'string',
     },
+    price: {
+      description: 'The price of the product',
+      type: 'number',
+      exclusiveMinimum: 0,
+    },
   },
 };
 
@@ -25,16 +30,35 @@ function generateRandomObject(schema) {
 function generateRandomData(propertySchema) {
   switch (propertySchema.type) {
     case 'integer':
-      return generateRandomNumber();
+    case 'number':
+      return generateRandomNumber(propertySchema);
     case 'string':
       return generateRandomString();
   }
 }
 
 function generateRandomNumber(schemaPart) {
-  const min = schemaPart?.minimum || 0;
-  const max = schemaPart?.maximum || 100;
-  return Math.floor(Math.random() * (max - min) + min);
+  const min =
+    schemaPart?.minimum !== undefined
+      ? schemaPart.minimum
+      : schemaPart?.exclusiveMinimum !== undefined
+        ? schemaPart.exclusiveMinimum + 1
+        : 0;
+
+  const max =
+    schemaPart?.maximum !== undefined
+      ? schemaPart.maximum
+      : schemaPart?.exclusiveMaximum !== undefined
+        ? schemaPart.exclusiveMaximum - 1
+        : 100;
+
+  const randomNumber = Math.random() * (max - min) + min;
+
+  if (schemaPart.type === 'integer') {
+    return Math.floor(randomNumber);
+  }
+
+  return randomNumber;
 }
 
 function generateRandomString(schemaPart) {
