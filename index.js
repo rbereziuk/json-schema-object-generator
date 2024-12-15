@@ -14,6 +14,15 @@ const schema = {
       type: 'number',
       exclusiveMinimum: 0,
     },
+    tags: {
+      description: 'Tags for the product',
+      type: 'array',
+      items: {
+        type: 'string',
+      },
+      minItems: 1,
+      uniqueItems: true,
+    },
   },
 };
 
@@ -34,6 +43,8 @@ function generateRandomData(propertySchema) {
       return generateRandomNumber(propertySchema);
     case 'string':
       return generateRandomString();
+    case 'array':
+      return generateRandomArray(propertySchema);
   }
 }
 
@@ -75,6 +86,18 @@ function generateRandomString(schemaPart) {
     const randomLetterIndex = Math.floor(Math.random() * letters.length);
 
     result = result + letters[randomLetterIndex];
+  }
+
+  return result;
+}
+
+function generateRandomArray(schemaPart) {
+  const minItems = 1;
+  const maxItems = 5;
+  const result = [];
+
+  for (let i = 0; i <= maxItems; i++) {
+    result[i] = generateRandomData(schemaPart.items);
   }
 
   return result;
