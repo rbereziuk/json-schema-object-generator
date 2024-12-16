@@ -15,6 +15,7 @@ function generateRandomObject(schema) {
   }
 
   for (const property in schema.properties) {
+    // If property not required include with 50% chance
     if (!schema.required?.includes(property) && Math.random() < 0.5) {
       resultObj[property] = generateRandomData(schema.properties[property]);
     }
@@ -56,10 +57,12 @@ function generateRandomData(schema) {
 
 /**
  * Generates a random number based on the schema.
+ * Supports `minimum`, `maximum`, `exclusiveMinimum`, `exclusiveMaximum` shcema constraints.
  * @param {object} schemaPart - The JSON Schema part object.
  * @returns {number} A random number within the range.
  */
 function generateRandomNumber(schemaPart) {
+  // Handle inclusive and exclusive options for min and max
   const min =
     schemaPart?.minimum !== undefined
       ? schemaPart.minimum
@@ -85,6 +88,7 @@ function generateRandomNumber(schemaPart) {
 
 /**
  * Generates a random array based on the schema.
+ * Supports `minItems`, `maxItems` and `uniqueItems` schema constraints.
  * @param {object} schemaPart - The JSON Schema part object.
  * @returns {Array} A random array matching to the schema.
  */
@@ -109,5 +113,3 @@ function generateRandomArray(schemaPart) {
 }
 
 module.exports = generateRandomData;
-
-//console.log(generateRandomObject(schema));

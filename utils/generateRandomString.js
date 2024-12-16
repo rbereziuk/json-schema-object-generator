@@ -2,8 +2,10 @@ const getRandomNumberInRange = require('./getRandomNumberInRange');
 
 /**
  * Utility function to generate a random string.
- * @param {number} min - min string length
- * @param {number} max - max string length
+ * Without arguments function returns random character string with random length between 1 and 5.
+ * @param {number} min - min string length.
+ * @param {number} max - max string length.
+ * @returns {string} A random generated string.
  */
 function generateRandomString(min = 1, max = 5) {
   const characters =
@@ -13,7 +15,7 @@ function generateRandomString(min = 1, max = 5) {
 
   const stringLength = getRandomNumberInRange(min, max);
 
-  for (let i = 0; i <= stringLength; i++) {
+  for (let i = 0; i < stringLength; i++) {
     const randomCharacterIndex = Math.floor(Math.random() * characters.length);
 
     result = result + characters[randomCharacterIndex];
