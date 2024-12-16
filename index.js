@@ -1,4 +1,3 @@
-const schema = require('./schemas/test.json');
 const generateRandomString = require('./utils/generateRandomString');
 const getRandomNumberInRange = require('./utils/getRandomNumberInRange');
 

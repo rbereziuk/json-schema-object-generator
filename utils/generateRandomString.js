@@ -13,6 +13,10 @@ function generateRandomString(min = 1, max = 5) {
 
   let result = '';
 
+  // Handle out of range values
+  if (min <= 0) min = 1;
+  if (max > 255) max = 255;
+
   const stringLength = getRandomNumberInRange(min, max);
 
   for (let i = 0; i < stringLength; i++) {

@@ -107,7 +107,9 @@ function runTests() {
 }
 
 try {
-  runTests();
+  for (let i = 0; i <= 3; i++) {
+    runTests();
+  }
 } catch (error) {
   console.error(error.message);
 }
