@@ -51,6 +51,9 @@ function generateRandomData(schema) {
     case 'object':
       return generateRandomObject(schema);
     default:
+      if (schema.enum) {
+        return schema.enum[Math.floor(Math.random() * schema.enum.length)];
+      }
       throw new Error('Unsupported schema type');
   }
 }
@@ -93,7 +96,10 @@ function generateRandomNumber(schemaPart) {
  * @returns {Array} A random array matching to the schema.
  */
 function generateRandomArray(schemaPart) {
-  const minItems = schemaPart?.minItems !== undefined ? schemaPart.minItems : 1;
+  const minItems =
+    schemaPart?.minItems !== undefined || schemaPart?.minItems > 0
+      ? schemaPart.minItems
+      : 1;
   const maxItems = schemaPart?.maxItems !== undefined ? schemaPart.maxItems : 3;
   const result = [];
   const itemsInArray = getRandomNumberInRange(minItems, maxItems);
